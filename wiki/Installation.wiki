@@ -1,15 +1,9 @@
 #summary How to install it and use with TC
 #labels Featured,Phase-Deploy
 
-= Introduction =
-*1:* Unpack mytc.7z archive 
-*2:* Copy installed Total Commander into /totalcmd/ directory 
-*X:* That's all! Now u need just double-click mytc.exe to run and use=) 
+= Installation =
+*1:* Unpack mytc.7z archive
 
+*2:* Copy installed Total Commander into /totalcmd/ directory
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+*X:* That's all! Now u need just double-click mytc.exe to run and use=)
