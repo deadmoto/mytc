@@ -2,9 +2,9 @@
 #labels Featured,Phase-Deploy
 
 = Introduction =
-*1:* Unpack mytc.7z archive
-*2:* Copy installed Total Commander into /totalcmd/ directory
-*X:* That's all! Now u need just double-click mytc.exe to run and use=)
+*1:* Unpack mytc.7z archive 
+*2:* Copy installed Total Commander into /totalcmd/ directory 
+*X:* That's all! Now u need just double-click mytc.exe to run and use=) 
 
 
 = Details =
