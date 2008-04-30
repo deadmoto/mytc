@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2007.12.14 18:26:17.031.groupproj,D:\.mydoc\RAD Studio\Projects\ProjectGroup1.groupproj=D:\.projects\.mytc\mytcpg.groupproj</Transaction>
+    <Transaction>2007.12.14 18:26:30.546.groupproj,D:\.projects\.mytc\mytcpg.groupproj=D:\.projects\.mytc\mytc.groupproj</Transaction>
+    <Transaction>2007.12.14 18:26:43.671.groupproj,D:\.projects\.mytc\mytc.groupproj=D:\.projects\.mytc\mytcpg.groupproj</Transaction>
+  </Transactions>
+	<Default.Personality>
+		<Projects ActiveProject="mytcp.exe"/>
+	</Default.Personality>
+</BorlandProject>
