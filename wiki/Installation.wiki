@@ -1,7 +1,4 @@
-#summary How to install it and use with TC
 #labels Featured,Phase-Deploy
-
-= Installation =
 *1:* Unpack mytc.7z archive
 
 *2:* Copy installed Total Commander into /totalcmd/ directory
