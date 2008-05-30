@@ -93,7 +93,7 @@ object Main: TMain
       Top = 21
       Width = 54
       Height = 13
-      Caption = 'version 0.2'
+      Caption = 'version 0.3'
     end
     object Label4: TLabel
       Left = 8
@@ -269,12 +269,5 @@ object Main: TMain
       0001000000000000000100000000000000010000000000000001000000000000
       0001000000000000000100000000000000010000000000000001000000000000
       00010001000000000003000300000000}
-  end
-  object Timer: TTimer
-    Enabled = False
-    Interval = 5000
-    OnTimer = TimerTimer
-    Left = 104
-    Top = 280
   end
 end

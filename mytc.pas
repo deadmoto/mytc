@@ -3,7 +3,7 @@ unit mytc;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Classes, Controls, Forms,
   Dialogs, ExtCtrls, Menus, ShellApi, ImgList, StdCtrls, Registry;
 
 type
@@ -14,7 +14,6 @@ type
     Exit: TMenuItem;
     Run: TMenuItem;
     Icons: TImageList;
-    Timer: TTimer;
     Autostart: TRadioGroup;
     About: TGroupBox;
     Label1: TLabel;
@@ -26,13 +25,12 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure RunClick(Sender: TObject);
-    procedure TimerTimer(Sender: TObject);
     procedure AutostartClick(Sender: TObject);
     procedure Label2Click(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+  end;
+  type
+  tcscan = class(TThread)
+    procedure Execute; override;
   end;
 
 var
@@ -44,7 +42,6 @@ var
 implementation
 
 {$R *.dfm}
-
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -114,23 +111,28 @@ begin
   Main.Close;
 end;
 
-procedure TMain.RunClick(Sender: TObject);
+procedure tcscan.Execute();
+var h:hwnd;
 begin
-  Timer.Interval:=5000;
-  ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
-  tray.IconIndex:=1;
-  Timer.Enabled:=False;
-  Timer.Enabled:=True;
+h:=0;
+if FindWindow(PChar('TTOTAL_CMD'),nil)=0 then ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
+while h=0 do
+  begin
+  h:=FindWindow(PChar('TTOTAL_CMD'),nil);
+  sleepex(50,false);
+  if h<>0 then
+    begin
+    main.tray.IconIndex:=1;
+    while h=FindWindow(PChar('TTOTAL_CMD'),nil) do sleepex(50,false);
+    end;
+  end;
+main.tray.IconIndex:=0;
 end;
 
-procedure TMain.TimerTimer(Sender: TObject);
-var h:HWND;
+
+procedure TMain.RunClick(Sender: TObject);
 begin
-  Timer.Interval:=100;
-  h:=FindWindow(PChar('TTOTAL_CMD'),nil);
-  if h=0 then tray.IconIndex:=0;
-  Timer.Enabled:=false;
-  Timer.Enabled:=true;
+tcscan.Create(false);
 end;
 
 end.
