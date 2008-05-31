@@ -93,7 +93,7 @@ object Main: TMain
       Top = 21
       Width = 54
       Height = 13
-      Caption = 'version 0.3'
+      Caption = 'version 0.4'
     end
     object Label4: TLabel
       Left = 8
