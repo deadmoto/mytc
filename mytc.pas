@@ -112,10 +112,46 @@ begin
 end;
 
 procedure tcscan.Execute();
-var h:hwnd;
+var h,n,p,l,t,b:hwnd;c:pansichar;i:integer;s:string;
 begin
-h:=0;
+h:=0;n:=0;p:=0;l:=0;t:=0;b:=0;
 if FindWindow(PChar('TTOTAL_CMD'),nil)=0 then ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
+while h=0 do
+  begin
+  h:=findwindow(PChar('TNASTYNAGSCREEN'),'Total Commander');
+  sleepex(1,false);
+  end;
+while n=0 do
+  begin
+  n:=FindWindowEx(h,0,PChar('TNotebook'),'');
+  sleepex(1,false);
+  end;
+while p=0 do
+  begin
+  p:=FindWindowEx(n,0,PChar('TPage'),'NagPage');
+  sleepex(1,false);
+  end;
+while l=0 do
+  begin
+  l:=FindWindowEx(p,0,'TPanel','');
+  sleepex(1,false);
+  end;
+while t=0 do
+  begin
+  if FindWindowEx(l,0,'TPanel','1')<>0 then t:=FindWindowEx(l,0,'TPanel','1');
+  if FindWindowEx(l,0,'TPanel','2')<>0 then t:=FindWindowEx(l,0,'TPanel','2');
+  if FindWindowEx(l,0,'TPanel','3')<>0 then t:=FindWindowEx(l,0,'TPanel','3');
+  sleepex(1,false);
+  end;
+SetLength(s,SendMessage(t,WM_GETTEXTLENGTH,0,0)+1);
+SetLength(s,SendMessage(t,WM_GETTEXT,Length(s),LPARAM(s)));
+while b=0 do
+  begin
+  b:=FindWindowEx(l,0,'TButton',pchar('&'+s));
+  sleepex(1,false);
+  end;
+SendMessage(b, BM_CLICK,0,0);
+h:=0;
 while h=0 do
   begin
   h:=FindWindow(PChar('TTOTAL_CMD'),nil);
