@@ -4,13 +4,13 @@ object Main: TMain
   HorzScrollBar.Increment = 31
   AlphaBlend = True
   AlphaBlendValue = 0
-  BorderStyle = bsToolWindow
+  BorderStyle = bsDialog
   Caption = 'Main'
-  ClientHeight = 205
+  ClientHeight = 199
   ClientWidth = 159
-  Color = clActiveCaption
+  Color = clCream
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
+  Font.Color = clBlack
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []

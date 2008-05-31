@@ -112,7 +112,7 @@ begin
 end;
 
 procedure tcscan.Execute();
-var h,n,p,l,t,b:hwnd;c:pansichar;i:integer;s:string;
+var h,n,p,l,t,b:hwnd;s:string;
 begin
 h:=0;n:=0;p:=0;l:=0;t:=0;b:=0;
 if FindWindow(PChar('TTOTAL_CMD'),nil)<>0 then
