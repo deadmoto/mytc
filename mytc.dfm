@@ -6,8 +6,8 @@ object Main: TMain
   AlphaBlendValue = 0
   BorderStyle = bsDialog
   Caption = 'Main'
-  ClientHeight = 199
-  ClientWidth = 159
+  ClientHeight = 206
+  ClientWidth = 156
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
@@ -102,15 +102,6 @@ object Main: TMain
       Height = 13
       Caption = 'deadmoto (c) 2007'
     end
-  end
-  object Tray: TTrayIcon
-    Hint = 'Double-click to run TC'
-    Icons = Icons
-    PopupMenu = Menu
-    Visible = True
-    OnDblClick = RunClick
-    Left = 200
-    Top = 280
   end
   object Menu: TPopupMenu
     Left = 168

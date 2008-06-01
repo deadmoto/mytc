@@ -2,18 +2,19 @@ program mytcp;
 
 uses
   Messages,
+  Dialogs,
   ShellAPI,
   SysUtils,
   Forms,
   Windows,
-  mytc in 'mytc.pas' {Main};
+  mytc in 'mytc.pas' {Main},
+  tc in 'tc.pas',
+  tray in 'tray.pas';
 
 {$R *.res}
-const WM_ICONTRAY = WM_USER + 1;
 
 var
   HM: THandle;
-  TrayIconData: TNotifyIconData;
 
 function Check: boolean;
 begin
@@ -23,40 +24,15 @@ begin
     HM := CreateMutex(nil, false, 'MyOwnMutex');
 end;
 
-
-
-function TrayIconAdd: boolean;
 begin
-with TrayIconData do
-  begin
-  cbSize := SizeOf(TrayIconData);
-  Wnd := Application.Handle;
-  uID := 0;
-  uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;
-  uCallbackMessage := WM_ICONTRAY;
-  hIcon := Application.Icon.Handle;
-  StrPCopy(szTip, Application.Title);
-end;
-Shell_NotifyIcon(NIM_ADD, @TrayIconData);
-end;
-
-function TrayIconMod: boolean;
-begin
-Shell_NotifyIcon(NIM_MODIFY, @TrayIconData);
-end;
-
-function TrayIconDel: boolean;
-begin
-Shell_NotifyIcon(NIM_DELETE, @TrayIconData);
-end;
-
-
-begin
-  if Check then Exit;
-  if TrayIconAdd then
-  
+  if check then exit;
+  tc.daemon.create(false);
+  tray.init.create(false);
+  tray.daemon.create(false);
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMain, Main);
+  tray.daemon.create(false);
   Application.Run;
+  tray.quit:=true;
 end.
