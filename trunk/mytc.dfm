@@ -9,11 +9,13 @@ object Main: TMain
   ClientHeight = 206
   ClientWidth = 156
   Color = clCream
+  DefaultMonitor = dmDesktop
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  FormStyle = fsStayOnTop
   Icon.Data = {
     0000010001002020100001000000E80200001600000028000000200000004000
     0000010004000000000000000000000000000000000000000000000000000000
@@ -118,9 +120,5 @@ object Main: TMain
       Caption = #1042#1099#1093#1086#1076
       OnClick = ExitClick
     end
-  end
-  object TrayIcon1: TTrayIcon
-    Left = 96
-    Top = 32
   end
 end
