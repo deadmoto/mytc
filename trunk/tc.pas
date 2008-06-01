@@ -2,7 +2,9 @@ unit tc;
 
 interface
 
-uses Classes,Windows,Dialogs;
+uses
+  Classes,
+  Windows;
 
 type
   daemon = class(TThread)

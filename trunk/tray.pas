@@ -2,64 +2,71 @@ unit tray;
 
 interface
 
-uses Classes,Windows,Messages,Dialogs,ShellAPI,SysUtils,tc,mytc;
+uses
+  Classes,
+  Windows,
+  Messages,
+  ShellAPI,
+  SysUtils,
+  tc,
+  mytc;
 
-const WM_ICONTRAY = WM_USER + 100;
+const WM_ICONTRAY=WM_USER + 100;
 
 type
-  daemon = class(TThread)
+  daemon=class(TThread)
     procedure Execute; override;
 end;
 
 type
-  init = class(TThread)
+  init=class(TThread)
     procedure Execute; override;
 end;
 
 type
-  free = class(TThread)
+  free=class(TThread)
     procedure Execute; override;
 end;
 
 var
   mywnd:hwnd;
-  isrunning, quit:boolean;
-  TrayIconData:TNotifyIconData;
+  isrunning,statechanged,quit:boolean;
+  trayicondata:tnotifyicondata;
 
 implementation
 
-function TrayIconAdd(Icon:PAnsiChar): boolean;
+function trayiconadd(icon:pansichar): boolean;
 begin
-  with TrayIconData do
+  with trayicondata do
     begin
-      cbSize := SizeOf(TrayIconData);
-      Wnd := main.Handle;
-      uID := 1;
-      uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;
-      uCallbackMessage := WM_ICONTRAY;
-      hIcon := ExtractIcon(hIcon,Icon,0);
-      StrPCopy(szTip,'Double-click to run TC');
+      cbSize:=sizeof(trayicondata);
+      wnd:=main.handle;
+      uid:=1;
+      uflags:=NIF_MESSAGE+NIF_ICON+ NIF_TIP;
+      ucallbackmessage:=WM_ICONTRAY;
+      hicon:=extracticon(hicon,icon,0);
+      strpcopy(sztip,'Double-click to run TC');
     end;
-  result:=Shell_NotifyIcon(NIM_ADD, @TrayIconData);
+  result:=shell_notifyicon(NIM_ADD,@trayicondata);
 end;
 
-function TrayIconMod(Icon:PAnsiChar): boolean;
+function trayiconmod(icon:pansichar):boolean;
 begin
-  TrayIconData.hIcon:=ExtractIcon(TrayIconData.hIcon,Icon,0);
-  result:=Shell_NotifyIcon(NIM_MODIFY, @TrayIconData);
+  trayicondata.hicon:=extracticon(trayicondata.hicon,icon,0);
+  result:=shell_notifyicon(NIM_MODIFY,@trayicondata);
 end;
 
-function TrayIconDel: boolean;
+function trayicondel:boolean;
 begin
-  result:=Shell_NotifyIcon(NIM_DELETE, @TrayIconData);
+  result:=shell_notifyicon(NIM_DELETE,@trayicondata);
 end; 
 
 procedure daemon.Execute;
 begin
   while not quit do
     begin
-      if tc.isrunning then TrayIconMod('0x0001.ico') else TrayIconMod('0x0000.ico');
-      sleepex(50,false);
+      if tc.statechanged then if tc.isrunning then TrayIconMod('0x0001.ico') else TrayIconMod('0x0000.ico');
+      sleepex(500,false);
     end;
 end;
 

@@ -1,38 +1,34 @@
 program mytcp;
 
 uses
-  Messages,
-  Dialogs,
-  ShellAPI,
-  SysUtils,
-  Forms,
-  Windows,
-  mytc in 'mytc.pas' {Main},
+  forms,
+  windows,
+  mytc in 'mytc.pas',
   tc in 'tc.pas',
   tray in 'tray.pas';
 
 {$R *.res}
 
 var
-  HM: THandle;
+  h: thandle;
 
-function Check: boolean;
+function check: boolean;
 begin
-  HM := OpenMutex(MUTEX_ALL_ACCESS, false, 'MyOwnMutex');
-  Result := (HM <> 0);
-  if HM = 0 then
-    HM := CreateMutex(nil, false, 'MyOwnMutex');
+  h:=openmutex(MUTEX_ALL_ACCESS,false,'MyMutex');
+  result:=(h<>0);
+  if h=0 then h:=createmutex(nil,false,'MyMutex');
 end;
 
 begin
   if check then exit;
-  tc.daemon.create(false);
-  tray.init.create(false);
-  tray.daemon.create(false);
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMain, Main);
+  tc.daemon.create(false);
+  tray.init.create(false);
+  tray.daemon.create(false);
   tray.daemon.create(false);
   Application.Run;
   tray.quit:=true;
+  sleepex(500,false);
 end.
