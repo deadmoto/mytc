@@ -35,5 +35,7 @@
     <DCCReference Include="mytc.pas">
       <Form>Main</Form>
     </DCCReference>
+    <DCCReference Include="tc.pas" />
+    <DCCReference Include="tray.pas" />
   </ItemGroup>
 </Project>

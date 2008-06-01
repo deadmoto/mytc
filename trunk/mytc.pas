@@ -4,11 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms,
-  Dialogs, ExtCtrls, Menus, ShellApi, ImgList, StdCtrls, Registry;
+  Dialogs, ExtCtrls, Menus, ShellApi, ImgList, StdCtrls, Registry, tc;
 
 type
   TMain = class(TForm)
-    Tray: TTrayIcon;
     Menu: TPopupMenu;
     Options: TMenuItem;
     Exit: TMenuItem;
@@ -27,6 +26,7 @@ type
     procedure RunClick(Sender: TObject);
     procedure AutostartClick(Sender: TObject);
     procedure Label2Click(Sender: TObject);
+    procedure TrayActivity(var Msg : TMessage ); message WM_USER + 100;
   end;
   type
   tcscan = class(TThread)
@@ -115,15 +115,15 @@ procedure tcscan.Execute();
 var h,n,p,l,t,b:hwnd;s:string;
 begin
 h:=0;n:=0;p:=0;l:=0;t:=0;b:=0;
-if FindWindow(PChar('TTOTAL_CMD'),nil)<>0 then
+//main.tray.IconIndex:=1;
+if tc.isrunning then
 begin
-  main.tray.IconIndex:=1;
-  showwindow((FindWindow(PChar('TTOTAL_CMD'),nil)),SW_MAXIMIZE);
+//main.tray.IconIndex:=1;
+showwindow(tc.wnd,SW_MAXIMIZE);
 end
 else
 begin
   ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
-  main.tray.IconIndex:=1;
   while h=0 do
     begin
     h:=findwindow(PChar('TNASTYNAGSCREEN'),'Total Commander');
@@ -169,14 +169,23 @@ begin
 end;
 end;
 while h=FindWindow(PChar('TTOTAL_CMD'),nil) do sleepex(50,false);
-main.tray.IconIndex:=0;
+//main.tray.IconIndex:=0;
 end;
 end;
 
 
 procedure TMain.RunClick(Sender: TObject);
 begin
+//ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
 tcscan.Create(false);
+end;
+
+procedure TMain.TrayActivity(var Msg: TMessage);
+begin
+  case Msg.lParam of
+    WM_LBUTTONDBLCLK: tcscan.Create(false);
+    WM_RBUTTONDOWN: Menu.Popup(Mouse.CursorPos.x, Mouse.CursorPos.y);
+  end;
 end;
 
 end.
