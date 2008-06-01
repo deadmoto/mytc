@@ -37,5 +37,6 @@
     </DCCReference>
     <DCCReference Include="tc.pas" />
     <DCCReference Include="tray.pas" />
+    <DCCReference Include="trayicon.pas" />
   </ItemGroup>
 </Project>

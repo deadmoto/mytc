@@ -3,9 +3,10 @@ program mytcp;
 uses
   forms,
   windows,
-  mytc in 'mytc.pas',
+  mytc in 'mytc.pas' {Main},
   tc in 'tc.pas',
-  tray in 'tray.pas';
+  tray in 'tray.pas',
+  trayicon in 'trayicon.pas';
 
 {$R *.res}
 
@@ -29,6 +30,4 @@ begin
   tray.daemon.create(false);
   tray.daemon.create(false);
   Application.Run;
-  tray.quit:=true;
-  sleepex(500,false);
 end.

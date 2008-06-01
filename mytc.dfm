@@ -119,4 +119,8 @@ object Main: TMain
       OnClick = ExitClick
     end
   end
+  object TrayIcon1: TTrayIcon
+    Left = 96
+    Top = 32
+  end
 end

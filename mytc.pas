@@ -28,6 +28,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    TrayIcon1: TTrayIcon;
     procedure ExitClick(Sender: TObject);
     procedure OptionsClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -35,7 +36,7 @@ type
     procedure RunClick(Sender: TObject);
     procedure AutostartClick(Sender: TObject);
     procedure Label2Click(Sender: TObject);
-    procedure TrayActivity(var Msg : TMessage ); message WM_USER + 100;
+    procedure TrayActivity(var Msg : TMessage );message WM_USER+1;
   end;
   type
   tcscan = class(TThread)
@@ -117,7 +118,6 @@ end;
 procedure TMain.ExitClick(Sender: TObject);
 begin
   CanClose:=caMinimize;
-
   Main.Close;
 end;
 
