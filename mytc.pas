@@ -28,7 +28,6 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    TrayIcon1: TTrayIcon;
     procedure ExitClick(Sender: TObject);
     procedure OptionsClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -52,6 +51,7 @@ var
 implementation
 
 {$R *.dfm}
+uses trayicon;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -117,8 +117,9 @@ end;
 
 procedure TMain.ExitClick(Sender: TObject);
 begin
-  CanClose:=caMinimize;
-  Main.Close;
+  canclose:=caminimize;
+  trayicon.remicon;
+  main.close;
 end;
 
 procedure tcscan.Execute();

@@ -23,7 +23,6 @@ end;
 begin
   if check then exit;
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMain, Main);
   tc.daemon.create(false);
   tray.init.create(false);
