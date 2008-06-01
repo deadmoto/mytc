@@ -3,8 +3,18 @@ unit mytc;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Controls, Forms,
-  Dialogs, ExtCtrls, Menus, ShellApi, ImgList, StdCtrls, Registry, tc;
+  Windows,
+  Messages,
+  SysUtils,
+  Classes,
+  Controls,
+  Forms,
+  ExtCtrls,
+  Menus,
+  ShellApi,
+  StdCtrls,
+  Registry,
+  tc;
 
 type
   TMain = class(TForm)
@@ -12,7 +22,6 @@ type
     Options: TMenuItem;
     Exit: TMenuItem;
     Run: TMenuItem;
-    Icons: TImageList;
     Autostart: TRadioGroup;
     About: TGroupBox;
     Label1: TLabel;
@@ -108,6 +117,7 @@ end;
 procedure TMain.ExitClick(Sender: TObject);
 begin
   CanClose:=caMinimize;
+
   Main.Close;
 end;
 
@@ -115,10 +125,8 @@ procedure tcscan.Execute();
 var h,n,p,l,t,b:hwnd;s:string;
 begin
 h:=0;n:=0;p:=0;l:=0;t:=0;b:=0;
-//main.tray.IconIndex:=1;
 if tc.isrunning then
 begin
-//main.tray.IconIndex:=1;
 showwindow(tc.wnd,SW_MAXIMIZE);
 end
 else
@@ -169,22 +177,20 @@ begin
 end;
 end;
 while h=FindWindow(PChar('TTOTAL_CMD'),nil) do sleepex(50,false);
-//main.tray.IconIndex:=0;
 end;
 end;
 
 
 procedure TMain.RunClick(Sender: TObject);
 begin
-//ShellExecute(Handle,'open',PChar(AppPath+'totalcmd\totalcmd.exe'),PChar('/O /i="'+AppPath+'totalcmd\wincmd.ini" /f="'+AppPath+'totalcmd\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
-tcscan.Create(false);
+  tcscan.create(false);
 end;
 
 procedure TMain.TrayActivity(var Msg: TMessage);
 begin
   case Msg.lParam of
-    WM_LBUTTONDBLCLK: tcscan.Create(false);
-    WM_RBUTTONDOWN: Menu.Popup(Mouse.CursorPos.x, Mouse.CursorPos.y);
+    WM_LBUTTONDBLCLK: tcscan.create(false);
+    WM_RBUTTONDOWN: menu.popup(Mouse.CursorPos.x, Mouse.CursorPos.y);
   end;
 end;
 
