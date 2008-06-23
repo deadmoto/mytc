@@ -3,30 +3,30 @@ program mytcp;
 uses
   forms,
   windows,
-  mytc in 'mytc.pas' {Main},
-  tc in 'tc.pas',
+  core in 'core.pas',
+  app in 'app.pas',
   tray in 'tray.pas',
   trayicon in 'trayicon.pas';
 
 {$R *.res}
 
 var
-  h: thandle;
+  h:thandle;
 
-function check: boolean;
+function check:boolean;
 begin
-  h:=openmutex(MUTEX_ALL_ACCESS,false,'MyMutex');
+  h:=openmutex(MUTEX_ALL_ACCESS,false,'mytcp');
   result:=(h<>0);
-  if h=0 then h:=createmutex(nil,false,'MyMutex');
+  if h=0 then h:=createmutex(nil,false,'mytcp');
 end;
 
 begin
   if check then exit;
-  Application.Initialize;
-  Application.CreateForm(TMain, Main);
-  tc.daemon.create(false);
-  tray.init.create(false);
+  application.initialize;
+  application.createform(tmain,main);
+  app.daemon.create(false);
+  with tray.init.create(false) do handle:=main.handle;
   tray.daemon.create(false);
   tray.daemon.create(false);
-  Application.Run;
+  application.run;
 end.

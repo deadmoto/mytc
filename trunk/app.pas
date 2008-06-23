@@ -1,14 +1,14 @@
-unit tc;
+unit app;
 
 interface
 
 uses
-  Classes,
-  Windows;
+  classes,
+  windows;
 
 type
-  daemon = class(TThread)
-    procedure Execute; override;
+  daemon = class(tthread)
+    procedure execute; override;
 end;
 
 var
@@ -17,11 +17,11 @@ var
 
 implementation
 
-procedure daemon.Execute;
+procedure daemon.execute;
 begin
   while true do
     begin
-      wnd:=FindWindow(PChar('TTOTAL_CMD'),nil);
+      wnd:=findwindow(pchar('TTOTAL_CMD'),nil);
       if not changed then
         begin
           if wnd<>0 then
