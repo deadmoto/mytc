@@ -88,12 +88,12 @@ object Main: TMain
       ParentFont = False
       OnClick = Label2Click
     end
-    object Label3: TLabel
+    object appver: TLabel
       Left = 8
       Top = 21
-      Width = 54
+      Width = 35
       Height = 13
-      Caption = 'version 0.4'
+      Caption = 'version'
     end
     object Label4: TLabel
       Left = 8
