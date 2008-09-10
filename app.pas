@@ -7,7 +7,7 @@ uses
   windows;
 
 type
-  daemon = class(tthread)
+  daemon = class(TThread)
     procedure execute; override;
 end;
 
@@ -21,7 +21,7 @@ procedure daemon.execute;
 begin
   while true do
     begin
-      wnd:=findwindow(pchar('TTOTAL_CMD'),nil);
+      wnd:=findwindow(PChar('TTOTAL_CMD'),nil);
       if not changed then
         begin
           if wnd<>0 then
@@ -35,7 +35,7 @@ begin
               changed:=true;
             end;
         end;
-      sleepex(50,true);
+      sleep(50);
     end
 end;
 

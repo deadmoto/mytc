@@ -2,7 +2,6 @@ object Main: TMain
   Left = 0
   Top = 0
   HorzScrollBar.Increment = 31
-  AlphaBlend = True
   AlphaBlendValue = 0
   BorderStyle = bsDialog
   Caption = 'Main'
@@ -43,7 +42,6 @@ object Main: TMain
     00000000000000000000000000000000000000000001000000070000000F}
   OldCreateOrder = False
   Position = poDesktopCenter
-  Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
