@@ -7,9 +7,10 @@ uses
   forms;
 
 const
-  appname='mytc';
+  appname     ='mytc';
   appclassname='string';
-  binary='bin\totalcmd.exe';
+  appver      ='version 0.4.1';
+  binary      ='bin\totalcmd.exe';
 
 var
   appath:string;

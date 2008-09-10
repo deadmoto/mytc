@@ -27,7 +27,7 @@ type
     About: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
+    appver: TLabel;
     Label4: TLabel;
     procedure ExitClick(Sender: TObject);
     procedure OptionsClick(Sender: TObject);
@@ -58,6 +58,7 @@ procedure tmain.formcreate(sender: tobject);
 var reg:tregistry;
 begin
   main.caption:=def.appname;
+  main.appver.caption:=def.appver;
   def.appath:=extractfilepath(paramstr(0));
   reg:=tregistry.create;
   with reg do
