@@ -5,34 +5,39 @@ interface
 uses
   classes,
   windows,
-  trayicon,
+  messages,
   shellapi,
-  sysutils,
-  core,
-  app;
+  sysutils;
+
+const WM_ICONTRAY=WM_USER+1;
 
 type
-  daemon=class(tthread)
+  daemon=class(TThread)
     procedure execute; override;
 end;
 
 type
-  init=class(tthread)
-    handle:thandle;
+  init=class(TThread)
     procedure execute; override;
 end;
 
 type
-  free=class(tthread)
+  free=class(TThread)
     procedure execute; override;
 end;
 
 var
+  mywnd:hwnd;
   quit:boolean;
   trayicondata:tnotifyicondata;
   icon0,icon1:hicon;
 
 implementation
+
+uses
+  core,
+  app,
+  ticon;
 
 procedure daemon.execute;
 begin
@@ -40,7 +45,7 @@ begin
     begin
       if app.changed then
         begin
-          if app.isrunning then trayicon.modicon(icon1,settings.hint) else trayicon.modicon(icon0,settings.hint);
+          if app.isrunning then ticon.modicon(icon1) else ticon.modicon(icon0);
           app.changed:=false;
         end;
       sleepex(100,false);
@@ -51,12 +56,12 @@ procedure init.execute;
 begin
   icon0:=extracticon(icon0,'0x0000.ico',0);
   icon1:=extracticon(icon1,'0x0001.ico',0);
-  trayicon.addicon(icon0,handle,settings.hint);
+  ticon.addicon(icon0);
 end;
 
 procedure free.execute;
 begin
-  trayicon.remicon;
+  ticon.remicon;
 end;
 
 end.

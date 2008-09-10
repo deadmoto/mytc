@@ -38,56 +38,36 @@ type
     procedure Label2Click(Sender: TObject);
     procedure TrayActivity(var Msg : TMessage );message WM_USER+1;
   end;
-type
-  tcscan=class(TThread)
-    procedure Execute; override;
-  end;
-type
-  tsettings=packed record
-    apppath:string;
-    appexepath:string;
-    binary:string;
-    runparam:string;
-    hint:string;
-    canclose:tcloseaction;
-    store:tmeminifile;
-  end;
 
 var
   main:tmain;
   interval:cardinal;
-  settings:tsettings;
+
+procedure tcscan;
+
 implementation
 
 {$R *.dfm}
 
-uses trayicon;
+uses
+  plugin,
+  def,
+  ticon;
 
 procedure tmain.formcreate(sender: tobject);
 var reg:tregistry;
 begin
-  if fileexists(extractfilepath(paramstr(0))+'settings.ini') then
+  main.caption:=def.appname;
+  def.appath:=extractfilepath(paramstr(0));
+  reg:=tregistry.create;
+  with reg do
   begin
-    with settings do
-    begin
-      store:=tmeminifile.create(settings.apppath+'settings.ini');
-      canclose:=canone;
-      apppath:=store.readstring('settings','path',extractfilepath(paramstr(0)));
-      appexepath:='"'+paramstr(0)+'"';
-      binary:=store.readstring('settings','executable','');
-      runparam:=store.readstring('settings','parameters','');
-      hint:=store.readstring('settings','tray tip','');
-    end;
-    reg:=tregistry.create;
-    with reg do
-    begin
-      rootkey:=HKEY_LOCAL_MACHINE;
-      openkeyreadonly('\Software\Microsoft\Windows\CurrentVersion\Run');
-      if settings.appexepath=readstring('myTC') then autostart.itemindex:=1;
-      closekey;
-      free;
-    end;
-  end
+    rootkey:=HKEY_LOCAL_MACHINE;
+    openkeyreadonly('\Software\Microsoft\Windows\CurrentVersion\Run');
+    if def.exename=readstring(def.appname) then autostart.itemindex:=1;
+    closekey;
+    free;
+  end;
 end;
 
 procedure TMain.Label2Click(Sender: TObject);
@@ -95,9 +75,9 @@ begin
   ShellExecute(Handle,nil,'http://deadmoto.googlepages.com/mytc',nil,nil,SW_SHOW);
 end;
 
-procedure TMain.OptionsClick(Sender: TObject);
+procedure tmain.optionsclick(sender:tobject);
 begin
-  Main.AlphaBlend:=false;
+  main.show;
 end;
 
 procedure TMain.AutostartClick(Sender: TObject);
@@ -108,34 +88,35 @@ begin
       HR:=TRegistry.Create;
       with HR do
         begin
-        RootKey:=HKEY_LOCAL_MACHINE;
-        OpenKey('\Software\Microsoft\Windows\CurrentVersion\Run',True);
-        WriteString('myTC',settings.appexepath);;
-        CloseKey;
-        Free;
+        rootkey:=HKEY_LOCAL_MACHINE;
+        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',True);
+        writestring(def.appname,def.exename);;
+        closekey;
+        free;
       end;
     end;
-  if Autostart.ItemIndex<>1 then
+  if autostart.itemindex<>1 then
     begin
-      HR:=TRegistry.Create;
-      with HR do
+      hr:=tregistry.create;
+      with hr do
         begin
-        RootKey:=HKEY_LOCAL_MACHINE;
-        OpenKey('\Software\Microsoft\Windows\CurrentVersion\Run',True);
-        DeleteValue('myTC');
-        Free;
+        rootkey:=HKEY_LOCAL_MACHINE;
+        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',true);
+        deletevalue(def.appname);
+        closekey;
+        free;
       end;
     end;
 end;
 
 procedure tmain.exitclick(sender:tobject);
 begin
-  settings.canclose:=caminimize;
-  trayicon.remicon;
+  def.canclose:=caminimize;
+  ticon.remicon;
   main.close;
 end;
 
-procedure tcscan.execute();
+procedure tcscan;
 begin
   if app.isrunning then
   begin
@@ -144,7 +125,8 @@ begin
   end
   else
   begin
-    shellexecute(handle,'open',pchar(settings.apppath+settings.binary),pchar(settings.runparam),nil,SW_SHOWNORMAL);
+    shellexecute(def.apphandle,'open',pchar(def.appath+def.binary),pchar('/O /i="'+def.appath+'bin\wincmd.ini" /f="'+def.appath+'bin\wcx_ftp.ini"'),nil,SW_SHOWNORMAL);
+    plugin.plug;
     setforegroundwindow(app.wnd);
   end;
 end;
@@ -152,21 +134,21 @@ end;
 
 procedure tmain.runclick(sender:tobject);
 begin
-  tcscan.create(false);
+  tcscan;
 end;
 
 procedure tmain.trayactivity(var msg:tmessage);
 begin
   case msg.lparam of
-    WM_LBUTTONDBLCLK:tcscan.create(false);
+    WM_LBUTTONDBLCLK:tcscan;
     WM_RBUTTONDOWN:menu.popup(mouse.cursorpos.x,mouse.cursorpos.y);
   end;
 end;
 
 procedure tmain.formclose(sender:tobject;var action:tcloseaction);
 begin
-  action:=settings.canclose;
-  main.alphablend:=true;
+  action:=def.canclose;
+  main.hide;
 end;
 
 end.

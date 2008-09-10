@@ -1,4 +1,4 @@
-unit trayicon;
+unit ticon;
 
 interface
 
@@ -10,8 +10,8 @@ uses
 
 const WM_ICONTRAY=WM_USER+1;
 
-function addicon(icon:hicon;handle:thandle;tip:string):boolean; overload;
-function modicon(icon:hicon;tip:string):boolean; overload;
+function addicon(icon:hicon):boolean; overload;
+function modicon(icon:hicon):boolean; overload;
 function remicon:boolean; overload;
 
 var
@@ -20,28 +20,30 @@ var
 
 implementation
 
-function addicon(icon:hicon;handle:thandle;tip:string):boolean; overload;
+uses
+  core;
+
+function addicon(icon:hicon):boolean; overload;
 begin
   with trayicondata do
     begin
       cbSize:=sizeof(trayicondata);
-      wnd:=handle;
+      wnd:=main.handle;
       uid:=1;
       uflags:=NIF_MESSAGE+NIF_ICON+NIF_TIP;
       ucallbackmessage:=WM_ICONTRAY;
       hicon:=icon;
-      strpcopy(sztip,tip);
+      strpcopy(sztip,'Double-click to run TC');
     end;
   result:=shell_notifyicon(NIM_ADD,@trayicondata);
 end;
 
-function modicon(icon:hicon;tip:string):boolean; overload;
+function modicon(icon:hicon):boolean; overload;
 begin
   with trayicondata do
     begin
       uflags:=NIF_ICON;
       hicon:=icon;
-      strpcopy(sztip,tip);
     end;
   result:=shell_notifyicon(NIM_MODIFY,@trayicondata);
 end;
