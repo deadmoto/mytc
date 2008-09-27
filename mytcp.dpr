@@ -28,7 +28,6 @@ begin
   application.initialize;
   tray.init.create(false);
   tray.daemon.create(false);
-//  tray.daemon.create(false);
   app.daemon.create(false);
   application.showmainform:=false;
   application.createform(tmain,main);

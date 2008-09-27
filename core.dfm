@@ -100,22 +100,22 @@ object Main: TMain
       Top = 78
       Width = 91
       Height = 13
-      Caption = 'deadmoto (c) 2007'
+      Caption = 'deadmoto (c) 2008'
     end
   end
   object Menu: TPopupMenu
     Left = 168
     Top = 280
     object Run: TMenuItem
-      Caption = #1047#1072#1087#1091#1089#1082
+      Caption = 'Run'
       OnClick = RunClick
     end
     object Options: TMenuItem
-      Caption = #1054#1087#1094#1080#1080
+      Caption = 'Options'
       OnClick = OptionsClick
     end
     object Exit: TMenuItem
-      Caption = #1042#1099#1093#1086#1076
+      Caption = 'Exit'
       OnClick = ExitClick
     end
   end

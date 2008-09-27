@@ -17,11 +17,15 @@ var
 
 implementation
 
+uses
+  tray;
+
 procedure daemon.execute;
 begin
   while true do
     begin
       wnd:=findwindow(PChar('TTOTAL_CMD'),nil);
+      if findwindow('shell_traywnd',nil)=0 then init.create(false);      
       if not changed then
         begin
           if wnd<>0 then

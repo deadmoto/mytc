@@ -73,7 +73,7 @@ end;
 
 procedure TMain.Label2Click(Sender: TObject);
 begin
-  ShellExecute(Handle,nil,'http://deadmoto.googlepages.com/mytc',nil,nil,SW_SHOW);
+  ShellExecute(Handle,nil,'http://code.google.com/p/mytc/',nil,nil,SW_SHOW);
 end;
 
 procedure tmain.optionsclick(sender:tobject);
@@ -90,7 +90,7 @@ begin
       with HR do
         begin
         rootkey:=HKEY_LOCAL_MACHINE;
-        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',True);
+        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',true);
         writestring(def.appname,def.exename);;
         closekey;
         free;
