@@ -9,7 +9,7 @@ uses
 const
   appname     ='mytc';
   appclassname='string';
-  appver      ='version 0.4.1';
+  appver      ='version 0.4.2';
   binary      ='bin\totalcmd.exe';
 
 var
