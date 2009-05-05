@@ -1,11 +1,11 @@
-object Main: TMain
+object main: Tmain
   Left = 0
   Top = 0
   HorzScrollBar.Increment = 31
   AlphaBlendValue = 0
   BorderStyle = bsDialog
-  Caption = 'Main'
-  ClientHeight = 206
+  Caption = 'main'
+  ClientHeight = 105
   ClientWidth = 156
   Color = clCream
   DefaultMonitor = dmDesktop
@@ -42,81 +42,46 @@ object Main: TMain
     00000000000000000000000000000000000000000001000000070000000F}
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Autostart: TRadioGroup
-    Left = 0
-    Top = 0
-    Width = 153
-    Height = 89
-    Caption = 'Autostart'
-    ItemIndex = 0
-    Items.Strings = (
-      'None'
-      'Registry'
-      'Autostart')
-    TabOrder = 0
-    OnClick = AutostartClick
-  end
-  object About: TGroupBox
-    Left = 0
-    Top = 95
-    Width = 153
-    Height = 106
-    Caption = 'About'
-    TabOrder = 1
-    object Label1: TLabel
-      Left = 8
-      Top = 40
-      Width = 130
-      Height = 13
-      Caption = 'mail: deadmoto@gmail.com'
-    end
-    object Label2: TLabel
-      Left = 8
-      Top = 59
-      Width = 98
-      Height = 13
-      Caption = 'homepage=>>www'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      OnClick = Label2Click
-    end
-    object appver: TLabel
-      Left = 8
-      Top = 21
-      Width = 35
-      Height = 13
-      Caption = 'version'
-    end
-    object Label4: TLabel
-      Left = 8
-      Top = 78
-      Width = 91
-      Height = 13
-      Caption = 'deadmoto (c) 2008'
-    end
-  end
   object Menu: TPopupMenu
     Left = 168
     Top = 280
-    object Run: TMenuItem
-      Caption = 'Run'
-      OnClick = RunClick
+    object run: TMenuItem
+      Caption = 'run'
+      OnClick = runClick
     end
-    object Options: TMenuItem
-      Caption = 'Options'
-      OnClick = OptionsClick
+    object delim1: TMenuItem
+      Caption = '-'
     end
-    object Exit: TMenuItem
-      Caption = 'Exit'
-      OnClick = ExitClick
+    object asnon: TMenuItem
+      Caption = 'no autostart'
+      Checked = True
+      RadioItem = True
+      OnClick = asnonClick
+    end
+    object ascur: TMenuItem
+      Caption = 'current user'
+      RadioItem = True
+      OnClick = ascurClick
+    end
+    object asall: TMenuItem
+      Caption = 'all users'
+      RadioItem = True
+      OnClick = asallClick
+    end
+    object delim2: TMenuItem
+      Caption = '-'
+    end
+    object about: TMenuItem
+      Caption = 'about'
+      Hint = 'About this program'
+      OnClick = aboutClick
+    end
+    object exit: TMenuItem
+      Caption = 'exit'
+      OnClick = exitClick
     end
   end
 end
