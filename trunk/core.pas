@@ -58,7 +58,8 @@ var
   lptype,lpsize:dword;
   lpdata:pwidechar;
 begin
-  main.caption:=def.appname;
+  caption:=appname;
+  appath:=extractfilepath(exename);
   ascur.enabled:=regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success;
   if regopenkeyex(hkey_current_user,lpsubkey,0,key_read,key)=error_success then
     if regqueryvalueex(key,appname,nil,@lptype,nil,@lpsize)=error_success then
