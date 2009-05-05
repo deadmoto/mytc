@@ -21,7 +21,8 @@ var
 implementation
 
 uses
-  core;
+  core,
+  def;
 
 function addicon(icon:hicon):boolean; overload;
 begin
@@ -33,7 +34,7 @@ begin
       uflags:=NIF_MESSAGE+NIF_ICON+NIF_TIP;
       ucallbackmessage:=WM_ICONTRAY;
       hicon:=icon;
-      strpcopy(sztip,'Double-click to run TC');
+      strpcopy(sztip,exename+#13+'Double-click to run TC');
     end;
   result:=shell_notifyicon(NIM_ADD,@trayicondata);
 end;

@@ -7,7 +7,7 @@ uses
   tray in 'tray.pas',
   ticon in 'ticon.pas',
   def in 'def.pas',
-  core in 'core.pas' {Main},
+  core in 'core.pas' {main},
   plugin in 'plugin.pas';
 
 {$R *.res}
@@ -24,12 +24,12 @@ end;
 
 begin
   if isrunning then exit;
-  def.apphandle:=application.handle;
+  apphandle:=application.handle;
   application.initialize;
   tray.init.create(false);
   tray.daemon.create(false);
   app.daemon.create(false);
   application.showmainform:=false;
-  application.createform(tmain,main);
+  Application.CreateForm(Tmain, main);
   application.run;
 end.

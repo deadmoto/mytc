@@ -13,29 +13,27 @@ uses
   messages,
   shellapi,
   sysutils,
-  registry,
   inifiles,
   app;
 
 type
-  TMain = class(TForm)
-    Menu: TPopupMenu;
-    Options: TMenuItem;
-    Exit: TMenuItem;
-    Run: TMenuItem;
-    Autostart: TRadioGroup;
-    About: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    appver: TLabel;
-    Label4: TLabel;
-    procedure ExitClick(Sender: TObject);
-    procedure OptionsClick(Sender: TObject);
-    procedure FormClose(Sender: TObject;var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure RunClick(Sender: TObject);
-    procedure AutostartClick(Sender: TObject);
-    procedure Label2Click(Sender: TObject);
+  tmain=class(tform)
+    menu:tpopupmenu;
+    run:tmenuitem;
+    delim1:tmenuitem;
+    asnon:tmenuitem;
+    ascur:tmenuitem;
+    asall:tmenuitem;
+    delim2:tmenuitem;
+    about:tmenuitem;
+    exit:tmenuitem;
+    procedure formcreate(sender:tobject);
+    procedure runclick(sender:tobject);
+    procedure ascurclick(sender:tobject);
+    procedure asnonclick(sender:tobject);
+    procedure asallclick(sender:tobject);
+    procedure aboutclick(sender:tobject);
+    procedure exitclick(sender:tobject);
     procedure TrayActivity(var Msg : TMessage );message WM_USER+1;
   end;
 
@@ -54,67 +52,97 @@ uses
   def,
   ticon;
 
-procedure tmain.formcreate(sender: tobject);
-var reg:tregistry;
+procedure tmain.formcreate;
+var
+  key:hkey;
+  lptype,lpsize:dword;
+  lpdata:pwidechar;
 begin
   main.caption:=def.appname;
-  main.appver.caption:=def.appver;
-  def.appath:=extractfilepath(paramstr(0));
-  reg:=tregistry.create;
-  with reg do
-  begin
-    rootkey:=HKEY_LOCAL_MACHINE;
-    openkeyreadonly('\Software\Microsoft\Windows\CurrentVersion\Run');
-    if def.exename=readstring(def.appname) then autostart.itemindex:=1;
-    closekey;
-    free;
-  end;
-end;
-
-procedure TMain.Label2Click(Sender: TObject);
-begin
-  ShellExecute(Handle,nil,'http://code.google.com/p/mytc/',nil,nil,SW_SHOW);
-end;
-
-procedure tmain.optionsclick(sender:tobject);
-begin
-  main.show;
-end;
-
-procedure TMain.AutostartClick(Sender: TObject);
-var HR: TRegistry;
-begin
-  if Autostart.ItemIndex=1 then
-    begin
-      HR:=TRegistry.Create;
-      with HR do
-        begin
-        rootkey:=HKEY_LOCAL_MACHINE;
-        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',true);
-        writestring(def.appname,def.exename);;
-        closekey;
-        free;
+  ascur.enabled:=regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success;
+  if regopenkeyex(hkey_current_user,lpsubkey,0,key_read,key)=error_success then
+    if regqueryvalueex(key,appname,nil,@lptype,nil,@lpsize)=error_success then
+      begin
+        lpdata:=allocmem(lpsize);
+        regqueryvalueex(key,appname,nil,@lptype,pbyte(@lpdata[0]),@lpsize);
+        if exename=lpdata then
+          ascur.checked:=true;
       end;
-    end;
-  if autostart.itemindex<>1 then
-    begin
-      hr:=tregistry.create;
-      with hr do
-        begin
-        rootkey:=HKEY_LOCAL_MACHINE;
-        openkey('\Software\Microsoft\Windows\CurrentVersion\Run',true);
-        deletevalue(def.appname);
-        closekey;
-        free;
+  asall.enabled:=regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success;
+  if regopenkeyex(hkey_local_machine,lpsubkey,0,key_read,key)=error_success then
+    if regqueryvalueex(key,appname,nil,@lptype,nil,@lpsize)=error_success then
+      begin
+        lpdata:=allocmem(lpsize);
+        regqueryvalueex(key,appname,nil,@lptype,pbyte(@lpdata[0]),@lpsize);
+        if exename=lpdata then
+          asall.checked:=true;
       end;
-    end;
+  asnon.enabled:=(ascur.enabled and ascur.checked) or (asall.enabled and asall.checked);
+  regclosekey(key);
 end;
 
-procedure tmain.exitclick(sender:tobject);
+procedure tmain.aboutclick;
 begin
-  def.canclose:=caminimize;
-  ticon.remicon;
-  main.close;
+  if messagebox(0,pchar(def.about),pwidechar(appname+' '+appver),mb_yesno)=idyes then
+    shellexecute(0,nil,appurl,nil,nil,sw_shownormal);
+end;
+
+procedure tmain.asnonclick;
+var
+  key:hkey;
+begin
+  if ascur.checked and ascur.enabled then
+    if regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success then
+      asnon.checked:=regdeletevalue(key,appname)=error_success;
+  if asall.checked and asall.enabled then
+    if regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success then
+      asnon.checked:=regdeletevalue(key,appname)=error_success;
+end;
+
+procedure tmain.ascurclick;
+var
+  key:hkey;
+  lpsize:dword;
+  lpdata:pchar;
+begin
+  if asall.checked and asall.enabled then
+    if regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success then
+      asnon.checked:=regdeletevalue(key,appname)=error_success;
+  lpdata:=pchar(exename);
+  lpsize:=length(lpdata)*sizeof(pchar);
+  if regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success then
+    if regcreatekey(hkey_current_user,lpsubkey,key)=error_success then
+      if regsetvalueex(key,appname,0,reg_sz,lpdata,lpsize)=error_success then
+        begin
+          ascur.checked:=true;
+          asnon.enabled:=true;
+        end;
+end;
+
+procedure tmain.asallclick;
+var
+  key:hkey;
+  lpsize:dword;
+  lpdata:pchar;
+begin
+  if ascur.checked and ascur.enabled then
+    if regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success then
+      asnon.checked:=regdeletevalue(key,appname)=error_success;
+  lpdata:=pchar(exename);
+  lpsize:=length(lpdata)*sizeof(pchar);
+  if regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success then
+    if regcreatekey(hkey_local_machine,lpsubkey,key)=error_success then
+      if regsetvalueex(key,appname,0,reg_sz,lpdata,lpsize)=error_success then
+        begin
+          asall.checked:=true;
+          asnon.enabled:=true;
+        end;
+end;
+
+procedure tmain.exitclick;
+begin
+  remicon;
+  close;
 end;
 
 procedure tcscan;
@@ -133,7 +161,7 @@ begin
 end;
 
 
-procedure tmain.runclick(sender:tobject);
+procedure tmain.runclick;
 begin
   tcscan;
 end;
@@ -144,12 +172,6 @@ begin
     WM_LBUTTONDBLCLK:tcscan;
     WM_RBUTTONDOWN:menu.popup(mouse.cursorpos.x,mouse.cursorpos.y);
   end;
-end;
-
-procedure tmain.formclose(sender:tobject;var action:tcloseaction);
-begin
-  action:=def.canclose;
-  main.hide;
 end;
 
 end.
