@@ -6,6 +6,8 @@ uses
   windows,
   forms;
 
+function exename:string;
+
 const
   appname     ='mytc';
   appclassname='string';
@@ -19,13 +21,16 @@ const
   lpsubkey    ='Software\Microsoft\Windows\CurrentVersion\Run';
 
 var
-  appath:string;
+  appath:string='%COMMANDER_PATH%';
   apphandle:hwnd;
   canclose:tcloseaction=canone;
 
-function exename:string;
-
 implementation
+
+function path:pchar;
+begin
+  result:=pchar(exename);
+end;
 
 function exename;
 var
