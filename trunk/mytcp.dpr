@@ -8,12 +8,16 @@ uses
   ticon in 'ticon.pas',
   def in 'def.pas',
   core in 'core.pas' {main},
-  plugin in 'plugin.pas';
+  plugin in 'plugin.pas',
+  version in 'version.pas';
 
 {$R *.res}
 
 var
   h: thandle;
+  osversioninfoex:tosversioninfoex;
+  build:cardinal;
+
 
 function isrunning: boolean;
 begin
@@ -23,6 +27,7 @@ begin
 end;
 
 begin
+//  osversioninfoex.getversion;
   if isrunning then exit;
   apphandle:=application.handle;
   application.initialize;
