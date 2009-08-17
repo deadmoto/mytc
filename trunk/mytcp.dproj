@@ -33,6 +33,7 @@
 			<Version>7.0</Version>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>debug;$(DCC_Define)</DCC_Define>
 			<DCC_DependencyCheckOutputName>debug\mytcp.exe</DCC_DependencyCheckOutputName>
 			<DCC_ExeOutput>debug</DCC_ExeOutput>
 			<DCC_Optimize>false</DCC_Optimize>

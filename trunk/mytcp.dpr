@@ -13,6 +13,13 @@ uses
 
 {$R *.res}
 
+const
+{$ifdef debug}
+  mutex='mytc';
+{$else}
+  mutex='mytcd'
+{$endif}
+
 var
   h: thandle;
   osversioninfoex:tosversioninfoex;
@@ -21,9 +28,9 @@ var
 
 function isrunning: boolean;
 begin
-  h:=openmutex(MUTEX_ALL_ACCESS,false,'mymutex');
+  h:=openmutex(MUTEX_ALL_ACCESS,false,mutex);
   result:=(h<>0);
-  if h=0 then h:=createmutex(nil,false,'mymutex');
+  if h=0 then h:=createmutex(nil,false,mutex);
 end;
 
 begin
