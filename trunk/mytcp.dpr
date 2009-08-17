@@ -20,10 +20,9 @@ const
   mutex='mytcd'
 {$endif}
 
-var
-  osversioninfoex:tosversioninfoex;
-  build:cardinal;
-
+//var
+//  osversioninfoex:tosversioninfoex;
+//  build:cardinal;
 
 function isfirst:boolean;
 begin
@@ -41,7 +40,7 @@ begin
       tray.daemon.create(false);
       app.daemon.create(false);
       application.showmainform:=false;
-      application.createform(Tmain, main);
+      application.createform(tmain,main);
       application.run;
     end;
 end.
