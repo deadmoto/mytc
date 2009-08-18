@@ -1,4 +1,4 @@
-program mytcp;
+﻿program mytcp;
 
 uses
   forms,
@@ -40,7 +40,7 @@ begin
       tray.daemon.create(false);
       app.daemon.create(false);
       application.showmainform:=false;
-      application.createform(tmain,main);
-      application.run;
+      Application.CreateForm(Tmain, main);
+  application.run;
     end;
 end.
