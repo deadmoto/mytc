@@ -1,4 +1,4 @@
-unit core;
+﻿unit core;
 
 interface
 
