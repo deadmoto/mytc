@@ -34,8 +34,8 @@ begin
 //  osversioninfoex.getversion;
   if isfirst then
     begin
-      apphandle:=application.handle;
       application.initialize;
+      apphandle:=application.handle;
       tray.init.create(false);
       tray.daemon.create(false);
       app.daemon.create(false);
