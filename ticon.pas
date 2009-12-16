@@ -34,7 +34,7 @@ begin
       uflags:=NIF_MESSAGE+NIF_ICON+NIF_TIP;
       ucallbackmessage:=WM_ICONTRAY;
       hicon:=icon;
-      strpcopy(sztip,exename+#13+'Double-click to run TC');
+      strpcopy(sztip,PChar(GetTrayIconHint));
     end;
   result:=shell_notifyicon(NIM_ADD,@trayicondata);
 end;
