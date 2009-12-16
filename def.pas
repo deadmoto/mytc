@@ -6,7 +6,8 @@ uses
   windows,
   forms;
 
-function exename:string;
+//function exename:string;
+function GetStartPath: string;
 function GetTrayIconHint: string;
 
 const
@@ -32,19 +33,17 @@ implementation
 
 function path:pchar;
 begin
-  result:=pchar(exename);
+  result:=pchar(GetStartPath);
 end;
 
-function exename;
-var
-  buffer:array[0..260] of char;
+function GetStartPath: string;
 begin
-  ParamStr(0);
+  Result := ParamStr(0);
 end;
 
 function GetTrayIconHint: string;
 begin
-  Result := 'mytc: ' + Version + #13 + 'path: ' + ParamStr(0);
+  Result := 'mytc: ' + Version + #13 + 'path: ' + GetStartPath;
 end;
 
 end.

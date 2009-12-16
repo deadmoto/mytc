@@ -59,14 +59,14 @@ var
   lpdata:pwidechar;
 begin
   caption:=appname;
-  appath:=extractfilepath(exename);
+  appath:=extractfilepath(GetStartPath);
   ascur.enabled:=regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success;
   if regopenkeyex(hkey_current_user,lpsubkey,0,key_read,key)=error_success then
     if regqueryvalueex(key,appname,nil,@lptype,nil,@lpsize)=error_success then
       begin
         lpdata:=allocmem(lpsize);
         regqueryvalueex(key,appname,nil,@lptype,pbyte(@lpdata[0]),@lpsize);
-        if exename=lpdata then
+        if GetStartPath=lpdata then
           ascur.checked:=true;
       end;
   asall.enabled:=regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success;
@@ -75,7 +75,7 @@ begin
       begin
         lpdata:=allocmem(lpsize);
         regqueryvalueex(key,appname,nil,@lptype,pbyte(@lpdata[0]),@lpsize);
-        if exename=lpdata then
+        if GetStartPath=lpdata then
           asall.checked:=true;
       end;
   asnon.enabled:=(ascur.enabled and ascur.checked) or (asall.enabled and asall.checked);
@@ -109,7 +109,7 @@ begin
   if asall.checked and asall.enabled then
     if regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success then
       asnon.checked:=regdeletevalue(key,appname)=error_success;
-  lpdata:=pchar(exename);
+  lpdata:=pchar(GetStartPath);
   lpsize:=length(lpdata)*sizeof(pchar);
   if regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success then
     if regcreatekey(hkey_current_user,lpsubkey,key)=error_success then
@@ -129,7 +129,7 @@ begin
   if ascur.checked and ascur.enabled then
     if regopenkeyex(hkey_current_user,lpsubkey,0,key_all_access,key)=error_success then
       asnon.checked:=regdeletevalue(key,appname)=error_success;
-  lpdata:=pchar(exename);
+  lpdata:=pchar(GetStartPath);
   lpsize:=length(lpdata)*sizeof(pchar);
   if regopenkeyex(hkey_local_machine,lpsubkey,0,key_all_access,key)=error_success then
     if regcreatekey(hkey_local_machine,lpsubkey,key)=error_success then

@@ -61,7 +61,6 @@
 				<Form>main</Form>
 			</DCCReference>
 			<DCCReference Include="plugin.pas"/>
-			<DCCReference Include="version.pas"/>
 			<DCCReference Include="mutex.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
