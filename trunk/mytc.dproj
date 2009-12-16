@@ -5,7 +5,7 @@
 			<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<DCC_DependencyCheckOutputName>E:\.portable\Total Commander\mytcp.exe</DCC_DependencyCheckOutputName>
-			<MainSource>mytcp.dpr</MainSource>
+			<MainSource>mytc.dpr</MainSource>
 			<ProjectVersion>12.0</ProjectVersion>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 		</PropertyGroup>
@@ -31,7 +31,7 @@
 			<DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
 			<DCC_UsePackage>vcl;rtl;vclx;vclactnband;dbrtl;vcldb;vcldbx;bdertl;dsnap;dsnapcon;adortl;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DataSnapServer;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;frx12;frxADO12;frxBDE12;frxDB12;frxDBX12;frxe12;frxTee12;fs12;fsADO12;fsBDE12;fsDB12;fsTee12</DCC_UsePackage>
 			<DCC_DcuOutput>build\units\</DCC_DcuOutput>
-			<DCC_DependencyCheckOutputName>build\mytcp.exe</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>build\mytc.exe</DCC_DependencyCheckOutputName>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<Version>7.0</Version>
@@ -50,7 +50,7 @@
 			<Version>7.0</Version>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="mytcp.dpr">
+			<DelphiCompile Include="mytc.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="app.pas"/>
@@ -58,7 +58,7 @@
 			<DCCReference Include="ticon.pas"/>
 			<DCCReference Include="def.pas"/>
 			<DCCReference Include="core.pas">
-				<Form> main </Form>
+				<Form>main</Form>
 			</DCCReference>
 			<DCCReference Include="plugin.pas"/>
 			<DCCReference Include="version.pas"/>
@@ -76,6 +76,9 @@
 			</BuildConfiguration>
 		</ItemGroup>
 		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<PropertyGroup>
+			<PreBuildEvent><![CDATA[FOR /F %%I IN ('svnversion') DO ECHO const Version = '0.4.%%I';> build\Version.inc]]></PreBuildEvent>
+		</PropertyGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType/>
@@ -114,7 +117,7 @@
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 					<Source>
-						<Source Name="MainSource">mytcp.dpr</Source>
+						<Source Name="MainSource">mytc.dpr</Source>
 					</Source>
 				</Delphi.Personality>
 				<ModelSupport>False</ModelSupport>

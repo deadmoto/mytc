@@ -1,4 +1,4 @@
-﻿program mytcp;
+﻿program mytc;
 
 uses
   forms,
@@ -17,7 +17,7 @@ const
 {$ifdef debug}
   mutex='mytc';
 {$else}
-  mutex='mytcd'
+  mutex='mytcd';
 {$endif}
 
 //var

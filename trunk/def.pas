@@ -7,6 +7,7 @@ uses
   forms;
 
 function exename:string;
+function GetTrayIconHint: string;
 
 const
   appname     ='mytc';
@@ -27,6 +28,8 @@ var
 
 implementation
 
+{$I build\Version.inc}
+
 function path:pchar;
 begin
   result:=pchar(exename);
@@ -36,7 +39,12 @@ function exename;
 var
   buffer:array[0..260] of char;
 begin
-  setstring(result,buffer,getmodulefilename(0,buffer,length(buffer)));
+  ParamStr(0);
+end;
+
+function GetTrayIconHint: string;
+begin
+  Result := 'mytc: ' + Version + #13 + 'path: ' + ParamStr(0);
 end;
 
 end.
