@@ -8,7 +8,6 @@ uses
   def in 'def.pas',
   core in 'core.pas' {main},
   plugin in 'plugin.pas',
-  version in 'version.pas',
   mutex in 'mutex.pas';
 
 {$R *.res}
