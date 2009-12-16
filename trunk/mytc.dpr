@@ -33,13 +33,13 @@ begin
 //  osversioninfoex.getversion;
   if isfirst then
     begin
-      application.initialize;
-      apphandle:=application.handle;
+      Application.Initialize;
+      Application.ShowMainForm := false;
+      Application.CreateForm(TMain, Main);
+      apphandle := Application.Handle;
       tray.init.create(false);
       tray.daemon.create(false);
       app.daemon.create(false);
-      application.showmainform:=false;
-      Application.CreateForm(Tmain, main);
-  application.run;
+      Application.Run;
     end;
 end.
