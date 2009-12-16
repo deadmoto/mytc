@@ -23,19 +23,27 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+			<DCC_ExeOutput>build\</DCC_ExeOutput>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+			<DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
 			<DCC_UsePackage>vcl;rtl;vclx;vclactnband;dbrtl;vcldb;vcldbx;bdertl;dsnap;dsnapcon;adortl;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DataSnapServer;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;frx12;frxADO12;frxBDE12;frxDB12;frxDBX12;frxe12;frxTee12;fs12;fsADO12;fsBDE12;fsDB12;fsTee12</DCC_UsePackage>
-			<DCC_DcuOutput>dcu</DCC_DcuOutput>
-			<DCC_DependencyCheckOutputName>mytcp.exe</DCC_DependencyCheckOutputName>
+			<DCC_DcuOutput>build\units\</DCC_DcuOutput>
+			<DCC_DependencyCheckOutputName>build\mytcp.exe</DCC_DependencyCheckOutputName>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<DCC_ExeOutput>release</DCC_ExeOutput>
-			<DCC_DependencyCheckOutputName>release\mytcp.exe</DCC_DependencyCheckOutputName>
 			<Version>7.0</Version>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_Define>debug;$(DCC_Define)</DCC_Define>
-			<DCC_DependencyCheckOutputName>debug\mytcp.exe</DCC_DependencyCheckOutputName>
-			<DCC_ExeOutput>debug</DCC_ExeOutput>
+			<DCC_DebugInformation>true</DCC_DebugInformation>
+			<DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
+			<DCC_RangeChecking>true</DCC_RangeChecking>
+			<DCC_LocalDebugSymbols>true</DCC_LocalDebugSymbols>
+			<DCC_AssertionsAtRuntime>true</DCC_AssertionsAtRuntime>
+			<DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
+			<DCC_ImportedDataReferences>true</DCC_ImportedDataReferences>
 			<DCC_Optimize>false</DCC_Optimize>
 			<DCC_DebugDCUs>true</DCC_DebugDCUs>
 			<DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
@@ -50,7 +58,7 @@
 			<DCCReference Include="ticon.pas"/>
 			<DCCReference Include="def.pas"/>
 			<DCCReference Include="core.pas">
-				<Form>main</Form>
+				<Form> main </Form>
 			</DCCReference>
 			<DCCReference Include="plugin.pas"/>
 			<DCCReference Include="version.pas"/>
