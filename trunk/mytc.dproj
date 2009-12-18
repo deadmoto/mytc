@@ -34,9 +34,12 @@
 			<DCC_DependencyCheckOutputName>build\mytc.exe</DCC_DependencyCheckOutputName>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 			<Version>7.0</Version>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_OutputDependencies>true</DCC_OutputDependencies>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 			<DCC_DebugInformation>true</DCC_DebugInformation>
 			<DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
 			<DCC_RangeChecking>true</DCC_RangeChecking>
@@ -53,15 +56,13 @@
 			<DelphiCompile Include="mytc.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="app.pas"/>
-			<DCCReference Include="tray.pas"/>
-			<DCCReference Include="ticon.pas"/>
-			<DCCReference Include="def.pas"/>
-			<DCCReference Include="core.pas">
-				<Form>main</Form>
-			</DCCReference>
-			<DCCReference Include="plugin.pas"/>
-			<DCCReference Include="mutex.pas"/>
+			<DCCReference Include="Window.pas"/>
+			<DCCReference Include="TrayIcon.pas"/>
+			<DCCReference Include="TrayMenu.pas"/>
+			<DCCReference Include="Core.pas"/>
+			<DCCReference Include="NagScreen.pas"/>
+			<DCCReference Include="Threads.pas"/>
+			<DCCReference Include="Daemons.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -75,9 +76,6 @@
 			</BuildConfiguration>
 		</ItemGroup>
 		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
-		<PropertyGroup>
-			<PreBuildEvent><![CDATA[FOR /F %%I IN ('svnversion') DO ECHO const Version = '0.4.%%I';> build\Version.inc]]></PreBuildEvent>
-		</PropertyGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType/>
