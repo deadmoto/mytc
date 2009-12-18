@@ -1,0 +1,126 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{df8c9ad2-36ce-4c1a-8389-3ec567494ef1}</ProjectGuid>
+			<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+			<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<DCC_DependencyCheckOutputName>E:\.portable\Total Commander\mytcp.exe</DCC_DependencyCheckOutputName>
+			<MainSource>mytc.dpr</MainSource>
+			<ProjectVersion>12.0</ProjectVersion>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+			<DCC_ExeOutput>build\</DCC_ExeOutput>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+			<DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
+			<DCC_UsePackage>vcl;rtl;vclx;vclactnband;dbrtl;vcldb;vcldbx;bdertl;dsnap;dsnapcon;adortl;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DataSnapServer;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;frx12;frxADO12;frxBDE12;frxDB12;frxDBX12;frxe12;frxTee12;fs12;fsADO12;fsBDE12;fsDB12;fsTee12</DCC_UsePackage>
+			<DCC_DcuOutput>build\units\</DCC_DcuOutput>
+			<DCC_DependencyCheckOutputName>build\mytc.exe</DCC_DependencyCheckOutputName>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<Version>7.0</Version>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_DebugInformation>true</DCC_DebugInformation>
+			<DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
+			<DCC_RangeChecking>true</DCC_RangeChecking>
+			<DCC_LocalDebugSymbols>true</DCC_LocalDebugSymbols>
+			<DCC_AssertionsAtRuntime>true</DCC_AssertionsAtRuntime>
+			<DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
+			<DCC_ImportedDataReferences>true</DCC_ImportedDataReferences>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_DebugDCUs>true</DCC_DebugDCUs>
+			<DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+			<Version>7.0</Version>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="mytc.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="app.pas"/>
+			<DCCReference Include="tray.pas"/>
+			<DCCReference Include="ticon.pas"/>
+			<DCCReference Include="def.pas"/>
+			<DCCReference Include="core.pas">
+				<Form>main</Form>
+			</DCCReference>
+			<DCCReference Include="plugin.pas"/>
+			<DCCReference Include="mutex.pas"/>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<PropertyGroup>
+			<PreBuildEvent><![CDATA[FOR /F %%I IN ('svnversion') DO ECHO const Version = '0.4.%%I';> build\Version.inc]]></PreBuildEvent>
+		</PropertyGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1049</VersionInfo>
+						<VersionInfo Name="CodePage">1251</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Source>
+						<Source Name="MainSource">mytc.dpr</Source>
+					</Source>
+				</Delphi.Personality>
+				<ModelSupport>False</ModelSupport>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>
