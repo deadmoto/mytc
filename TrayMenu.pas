@@ -13,7 +13,7 @@ const
   ID_NONE = 102;
   ID_HKCU = 103;
   ID_HKLM = 104;
-  ID_ABOUT = 105;
+  ID_HOME = 105;
   ID_EXIT = 106;
 
 var
@@ -75,7 +75,7 @@ begin
   AppendMenu(PopupMenu, MF_STRING or HKCUFlags, ID_HKCU, 'current user');
   AppendMenu(PopupMenu, MF_STRING or HKLMFlags, ID_HKLM, 'all users');
   AppendMenu(PopupMenu, MF_SEPARATOR, 0, nil);
-  AppendMenu(PopupMenu, MF_STRING, ID_ABOUT, 'about');
+  AppendMenu(PopupMenu, MF_STRING, ID_HOME, 'homepage');
   AppendMenu(PopupMenu, MF_STRING, ID_EXIT, 'exit');
   GetCursorPos(Point);
   TrackPopupMenu(PopupMenu, 0, Point.X, Point.Y, 0, WndHandle, nil);

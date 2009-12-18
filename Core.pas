@@ -21,6 +21,7 @@ uses
   NagScreen,
   TrayIcon,
   TrayMenu;
+{$I build\Version.inc}
 
 procedure LaunchThread;
 var
@@ -28,16 +29,11 @@ var
   SI: TStartupInfo;
   PI: TProcessInformation;
 begin
-  TrayIconData.HIcon := Icon1;
-  TrayIcon.Update;
   Path := ExtractFilePath(ParamStr(0));
   SI := default(TStartupInfo);
   SI.cb := SizeOf(TStartupInfo);
   CreateProcess(PChar(Path + 'bin\totalcmd.exe'), PChar('/O /i="' + Path + 'bin\wincmd.ini" /f="' + Path + 'bin\wcx_ftp.ini"'), nil, nil,
     false, NORMAL_PRIORITY_CLASS, nil, PChar(Path), SI, PI);
-  WaitForSingleObject(PI.hProcess, INFINITE);
-  TrayIconData.HIcon := Icon0;
-  TrayIcon.Update;
 end;
 
 procedure Launch;
@@ -77,12 +73,6 @@ begin
   RegCloseKey(Key);
 end;
 
-procedure ShowAboutWindow;
-begin
-  if MessageBox(0, 'Would you like to visit projects homepage?', 'mytc 0.4.3', MB_YESNO) = IDYES then
-    ShellExecute(0, nil, URL, nil, nil, SW_SHOWNORMAL);
-end;
-
 procedure Exit;
 begin
   TrayIcon.Destroy;
@@ -100,8 +90,8 @@ begin
       SetHKCUAutostart;
     ID_HKLM:
       SetHKLMAutostart;
-    ID_ABOUT:
-      ShowAboutWindow;
+    ID_HOME:
+      ShellExecute(0, nil, URL, nil, nil, SW_SHOWNORMAL);
     ID_EXIT:
       Exit;
   end;
