@@ -16,7 +16,6 @@ var
   Icon1: HIcon;
 
 procedure Create;
-procedure Update;
 procedure Destroy;
 
 implementation
@@ -25,6 +24,7 @@ uses
   Core,
   TrayMenu,
   Window;
+{$I build\Version.inc}
 
 function TrayIconProc(Wnd: HWND; Msg: Integer; WPARAM: WPARAM; LPARAM: LPARAM): LRESULT; stdcall;
 begin
@@ -55,13 +55,8 @@ begin
   TrayIconData.uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;
   TrayIconData.uCallbackMessage := WM_USER;
   TrayIconData.HIcon := Icon0;
-  StrPCopy(TrayIconData.szTip, 'TrayIcon');
+  StrPCopy(TrayIconData.szTip, PChar('mytc 0.5.' + Version + #13 + ParamStr(0)));
   Shell_NotifyIcon(NIM_ADD, @TrayIconData);
-end;
-
-procedure Update;
-begin
-  // Shell_NotifyIcon(NIM_MODIFY, @TrayIconData);
 end;
 
 procedure Destroy;
