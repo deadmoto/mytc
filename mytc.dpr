@@ -1,45 +1,26 @@
-﻿program mytc;
+program mytc;
 
 uses
-  forms,
-  app in 'app.pas',
-  tray in 'tray.pas',
-  ticon in 'ticon.pas',
-  def in 'def.pas',
-  core in 'core.pas' {main},
-  plugin in 'plugin.pas',
-  mutex in 'mutex.pas';
+  Windows,
+  Window in 'Window.pas',
+  TrayIcon in 'TrayIcon.pas',
+  TrayMenu in 'TrayMenu.pas',
+  Core in 'Core.pas',
+  NagScreen in 'NagScreen.pas',
+  Threads in 'Threads.pas',
+  Daemons in 'Daemons.pas';
 
-{$R *.res}
-
-const
-{$ifdef debug}
-  mutex='mytc';
-{$else}
-  mutex='mytcd';
-{$endif}
-
-//var
-//  osversioninfoex:tosversioninfoex;
-//  build:cardinal;
-
-function isfirst:boolean;
-begin
-  if openmutex(mutex_all_access,false,mutex)=0 then
-    result:=createmutex(nil,integer(false),mutex)<>0;
-end;
+var
+  Msg: TMsg;
 
 begin
-//  osversioninfoex.getversion;
-  if isfirst then
-    begin
-      Application.Initialize;
-      Application.ShowMainForm := false;
-      Application.CreateForm(TMain, Main);
-      apphandle := Application.Handle;
-      tray.init.create(false);
-      tray.daemon.create(false);
-      app.daemon.create(false);
-      Application.Run;
-    end;
+  Window.Create;
+  TrayIcon.Create;
+  Thread.Start(CloseNagScreen);
+  Thread.Start(ProcessWatcher);
+  while GetMessage(Msg, 0, 0, 0) do
+  begin
+    TranslateMessage(Msg);
+    DispatchMessage(Msg);
+  end;
 end.
