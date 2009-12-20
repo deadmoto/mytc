@@ -16,7 +16,8 @@ implementation
 
 uses
   Core,
-  TrayIcon;
+  TrayIcon,
+  TrayMenu;
 
 function WindowProc(Wnd: HWND; Msg: Integer; WPARAM: WPARAM; LPARAM: LPARAM): LRESULT; stdcall;
 begin
@@ -24,7 +25,7 @@ begin
     WM_COMMAND:
       SelectMenuItem(WPARAM);
     WM_DESTROY:
-      Exit;
+      SelectMenuItem(ID_EXIT);
     WM_USER:
       TrayIconProc(Wnd, Msg, WPARAM, LPARAM);
   end;

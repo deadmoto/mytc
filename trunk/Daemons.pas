@@ -18,6 +18,7 @@ var
   LastHandle: THandle;
   LastState: boolean;
 begin
+  LastState := false;
   while true do
   begin
     LastHandle := FindWindow(PChar('TTOTAL_CMD'), nil);
