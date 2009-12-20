@@ -55,7 +55,11 @@ begin
   TrayIconData.uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;
   TrayIconData.uCallbackMessage := WM_USER;
   TrayIconData.HIcon := Icon0;
+{$IFDEF DEBUG}
+  StrPCopy(TrayIconData.szTip, PChar('debug' + #13 + 'mytc 0.5.' + Version + #13 + ParamStr(0)));
+{$ELSE}
   StrPCopy(TrayIconData.szTip, PChar('mytc 0.5.' + Version + #13 + ParamStr(0)));
+{$ENDIF}
   Shell_NotifyIcon(NIM_ADD, @TrayIconData);
 end;
 
