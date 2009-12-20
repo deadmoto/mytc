@@ -21,6 +21,7 @@ var
   NumButton: HWND;
   NumText: string;
 begin
+  LastNagScreen := 0;
   while True do
   begin
     NastyNagScreen := 0;
