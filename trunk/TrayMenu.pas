@@ -78,6 +78,7 @@ begin
   AppendMenu(PopupMenu, MF_STRING, ID_HOME, 'homepage');
   AppendMenu(PopupMenu, MF_STRING, ID_EXIT, 'exit');
   GetCursorPos(Point);
+  SetForegroundWindow(WndHandle);
   TrackPopupMenu(PopupMenu, 0, Point.X, Point.Y, 0, WndHandle, nil);
   Result := 0;
   DestroyMenu(PopupMenu);
