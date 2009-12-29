@@ -8,7 +8,8 @@ uses
   Core in 'Core.pas',
   NagScreen in 'NagScreen.pas',
   Threads in 'Threads.pas',
-  Daemons in 'Daemons.pas';
+  Daemons in 'Daemons.pas',
+  Process in 'Process.pas';
 
 var
   Msg: TMsg;
