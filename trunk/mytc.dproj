@@ -63,6 +63,7 @@
 			<DCCReference Include="NagScreen.pas"/>
 			<DCCReference Include="Threads.pas"/>
 			<DCCReference Include="Daemons.pas"/>
+			<DCCReference Include="Process.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

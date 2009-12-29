@@ -7,10 +7,10 @@ uses
   ShellAPI,
   SysUtils,
   Windows;
+{$I build\Version.inc}
 
 const
   URL = 'http://code.google.com/p/mytc/';
-
 function SelectMenuItem(WPARAM: WPARAM): LRESULT; stdcall;
 procedure Launch;
 
@@ -19,21 +19,19 @@ implementation
 uses
   Dialogs,
   NagScreen,
+  Process,
   TrayIcon,
   TrayMenu;
-{$I build\Version.inc}
 
 procedure LaunchThread;
 var
-  Path: string;
-  SI: TStartupInfo;
-  PI: TProcessInformation;
+  Process: TProcess;
 begin
-  Path := ExtractFilePath(ParamStr(0));
-  SI := default(TStartupInfo);
-  SI.cb := SizeOf(TStartupInfo);
-  CreateProcess(PChar(Path + 'bin\totalcmd.exe'), PChar('/O /i="' + Path + 'bin\wincmd.ini" /f="' + Path + 'bin\wcx_ftp.ini"'), nil, nil,
-    false, NORMAL_PRIORITY_CLASS, nil, PChar(Path), SI, PI);
+  Process := TProcess.Create;
+  Process.Application := 'bin\totalcmd.exe';
+  Process.Directory := ExtractFilePath(ParamStr(0));
+  Process.Parameters := '/O /i="' + Process.Directory + 'bin\wincmd.ini" /f="' + Process.Directory + 'bin\wcx_ftp.ini"';
+  Process.Start;
 end;
 
 procedure Launch;
