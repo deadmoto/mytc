@@ -28,8 +28,8 @@ var
   Process: TProcess;
 begin
   Process := TProcess.Create;
-  Process.Application := 'bin\totalcmd.exe';
   Process.Directory := ExtractFilePath(ParamStr(0));
+  Process.Application := Process.Directory + 'bin\totalcmd.exe';
   Process.Parameters := '/O /i="' + Process.Directory + 'bin\wincmd.ini" /f="' + Process.Directory + 'bin\wcx_ftp.ini"';
   Process.Start;
 end;
