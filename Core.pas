@@ -11,6 +11,8 @@ uses
 
 const
   URL = 'http://code.google.com/p/mytc/';
+  RUN = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+
 function SelectMenuItem(WPARAM: WPARAM): LRESULT; stdcall;
 procedure Launch;
 
@@ -45,10 +47,10 @@ procedure SetNoAutostart;
 var
   Key: HKEY;
 begin
-  RegOpenKeyEx(HKEY_LOCAL_MACHINE, 'Software\\Microsoft\\Windows\\CurrentVersion\\Run', 0, KEY_ALL_ACCESS, Key);
+  RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_ALL_ACCESS, Key);
   RegDeleteValue(Key, 'mytc');
   RegCloseKey(Key);
-  RegOpenKeyEx(HKEY_CURRENT_USER, 'Software\\Microsoft\\Windows\\CurrentVersion\\Run', 0, KEY_ALL_ACCESS, Key);
+  RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_ALL_ACCESS, Key);
   RegDeleteValue(Key, 'mytc');
   RegCloseKey(Key);
 end;
@@ -57,7 +59,7 @@ procedure SetHKCUAutostart;
 var
   Key: HKEY;
 begin
-  RegOpenKeyEx(HKEY_CURRENT_USER, 'Software\\Microsoft\\Windows\\CurrentVersion\\Run', 0, KEY_ALL_ACCESS, Key);
+  RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_ALL_ACCESS, Key);
   RegSetValueEx(Key, 'mytc', 0, REG_SZ, GetCommandLine, Length(GetCommandLine) * SizeOf(PChar));
   RegCloseKey(Key);
 end;
@@ -66,7 +68,7 @@ procedure SetHKLMAutostart;
 var
   Key: HKEY;
 begin
-  RegOpenKeyEx(HKEY_LOCAL_MACHINE, 'Software\\Microsoft\\Windows\\CurrentVersion\\Run', 0, KEY_ALL_ACCESS, Key);
+  RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_ALL_ACCESS, Key);
   RegSetValueEx(Key, 'mytc', 0, REG_SZ, GetCommandLine, Length(GetCommandLine) * SizeOf(PChar));
   RegCloseKey(Key);
 end;
