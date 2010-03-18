@@ -36,31 +36,29 @@ var
 begin
   HKCUFlags := MF_DISABLED;
   if RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_ALL_ACCESS, Key) = ERROR_SUCCESS then
-  begin
     HKCUFlags := MF_ENABLED;
-    if RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
-      if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
-      begin
-        lpData := AllocMem(lpSize);
-        RegQueryValueEx(Key, 'mytc', nil, @lpType, @lpData[0], @lpSize);
-        if GetCommandLine^ = lpData^ then
-          HKCUFlags := HKCUFlags or MF_CHECKED;
-      end;
-  end;
+  RegCloseKey(Key);
+  if RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
+    if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
+    begin
+      lpData := AllocMem(lpSize);
+      RegQueryValueEx(Key, 'mytc', nil, @lpType, @lpData[0], @lpSize);
+      if GetCommandLine^ = lpData^ then
+        HKCUFlags := HKCUFlags or MF_CHECKED;
+    end;
   RegCloseKey(Key);
   HKLMFlags := MF_DISABLED;
   if RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_ALL_ACCESS, Key) = ERROR_SUCCESS then
-  begin
     HKLMFlags := MF_ENABLED;
-    if RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
-      if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
-      begin
-        lpData := AllocMem(lpSize);
-        RegQueryValueEx(Key, 'mytc', nil, @lpType, @lpData[0], @lpSize);
-        if GetCommandLine^ = lpData^ then
-          HKLMFlags := HKLMFlags or MF_CHECKED;
-      end;
-  end;
+  RegCloseKey(Key);
+  if RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
+    if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
+    begin
+      lpData := AllocMem(lpSize);
+      RegQueryValueEx(Key, 'mytc', nil, @lpType, @lpData[0], @lpSize);
+      if GetCommandLine^ = lpData^ then
+        HKLMFlags := HKLMFlags or MF_CHECKED;
+    end;
   RegCloseKey(Key);
 end;
 
