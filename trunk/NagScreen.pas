@@ -13,15 +13,14 @@ implementation
 procedure CloseNagScreen;
 var
   NastyNagScreen: HWND;
-  LastNagScreen: HWND;
   Notebook: HWND;
   Page: HWND;
   Panel: HWND;
   NumPanel: HWND;
   NumButton: HWND;
   NumText: string;
+  RepeatCount: integer;
 begin
-  LastNagScreen := 0;
   while True do
   begin
     NastyNagScreen := 0;
@@ -31,35 +30,40 @@ begin
     NumPanel := 0;
     NumButton := 0;
     NumText := '';
-    while (NastyNagScreen = 0) or (NastyNagScreen = LastNagScreen) do
+    RepeatCount := 0;
+    while (NastyNagScreen = 0) do
     begin
       NastyNagScreen := FindWindow('TNASTYNAGSCREEN', nil);
       Sleep(1);
     end;
-    while Notebook = 0 do
+    while (Notebook = 0) and (RepeatCount < 100) do
     begin
       Notebook := FindWindowEx(NastyNagScreen, 0, 'TNotebook', nil);
+      Inc(RepeatCount);
     end;
-    while Page = 0 do
+    while (Page = 0) and (RepeatCount < 100) do
     begin
       Page := FindWindowEx(Notebook, 0, 'TPage', nil);
+      Inc(RepeatCount);
     end;
-    while Panel = 0 do
+    while (Panel = 0) and (RepeatCount < 100) do
     begin
       Panel := FindWindowEx(Page, 0, 'TPanel', nil);
+      Inc(RepeatCount);
     end;
-    while NumPanel = 0 do
+    while (NumPanel = 0) and (RepeatCount < 100) do
     begin
       NumPanel := FindWindowEx(Panel, 0, 'TPanel', nil);
+      Inc(RepeatCount);
     end;
-    while NumButton = 0 do
+    while (NumButton = 0) and (RepeatCount < 100) do
     begin
       SetLength(NumText, SendMessage(NumPanel, WM_GETTEXTLENGTH, 0, 0));
       SendMessage(NumPanel, WM_GETTEXT, Length(NumText) + 1, LPARAM(NumText));
       NumButton := FindWindowEx(Panel, 0, 'TButton', PChar('&' + NumText));
+      Inc(RepeatCount);
     end;
     SendMessage(NumButton, BM_CLICK, 0, 0);
-    LastNagScreen := NastyNagScreen;
   end;
 end;
 
