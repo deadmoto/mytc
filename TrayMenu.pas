@@ -64,6 +64,11 @@ begin
         HKLMFlags := HKLMFlags or MF_CHECKED;
     end;
   RegCloseKey(Key);
+  // Checking if no autostart
+  if (MF_CHECKED and HKLMFlags or HKCUFlags = MF_CHECKED) then
+    NONEFlags := MF_ENABLED
+  else
+    NONEFlags := MF_CHECKED;
 end;
 
 function ShowMenu: LRESULT; stdcall;
