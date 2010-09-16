@@ -11,7 +11,7 @@ uses
 
 const
   URL = 'http://code.google.com/p/mytc/';
-  RUN = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+  RUN = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run';
 
 function SelectMenuItem(WPARAM: WPARAM): LRESULT; stdcall;
 procedure Launch;

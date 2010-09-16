@@ -34,9 +34,11 @@ var
   lpType, lpSize: DWORD;
   lpData: PChar;
 begin
-  HKCUFlags := MF_DISABLED;
+  // Checking HKCU permissions and autostart
   if RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_ALL_ACCESS, Key) = ERROR_SUCCESS then
-    HKCUFlags := MF_ENABLED;
+    HKCUFlags := MF_ENABLED
+  else
+    HKCUFlags := MF_GRAYED;
   RegCloseKey(Key);
   if RegOpenKeyEx(HKEY_CURRENT_USER, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
     if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
@@ -47,9 +49,11 @@ begin
         HKCUFlags := HKCUFlags or MF_CHECKED;
     end;
   RegCloseKey(Key);
-  HKLMFlags := MF_DISABLED;
+  // Checking HKLM permissions and autostart
   if RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_ALL_ACCESS, Key) = ERROR_SUCCESS then
-    HKLMFlags := MF_ENABLED;
+    HKLMFlags := MF_ENABLED
+  else
+    HKLMFlags := MF_GRAYED;
   RegCloseKey(Key);
   if RegOpenKeyEx(HKEY_LOCAL_MACHINE, RUN, 0, KEY_READ, Key) = ERROR_SUCCESS then
     if RegQueryValueEx(Key, 'mytc', nil, @lpType, nil, @lpSize) = ERROR_SUCCESS then
