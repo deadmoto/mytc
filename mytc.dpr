@@ -14,6 +14,8 @@ uses
 var
   Msg: TMsg;
 
+{$R resource\manifest.res}
+
 begin
   Window.Create;
   TrayIcon.Create;
