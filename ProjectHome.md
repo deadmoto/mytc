@@ -1,0 +1,2 @@
+This small program was designed to start with Windows and launch TC from System Tray. It has only one option - autostart from registry. This project was designed to replace tcrun using standart controls, but since that time i decide to replace some components with WinAPI features to increase speed and decrease size=)
+&lt;wiki:gadget url="http://www.ohloh.net/p/84915/widgets/project\_basic\_stats.xml" height="220" border="1"/&gt;
